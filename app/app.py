@@ -9,9 +9,9 @@ print("Device: ",device)
 
 # Load the model and tokenizer
 model = AutoModelForCausalLM.from_pretrained(
-    './app/model',
+    './model',
     device_map = 'auto')
-tokenizer = AutoTokenizer.from_pretrained('./app/model')
+tokenizer = AutoTokenizer.from_pretrained('./model')
 
 # create a text generation pipeline
 text_generator = pipeline(
@@ -24,17 +24,17 @@ text_generator = pipeline(
 )
 
 # generate prompt for the model
-def Generate_prompt_input(text):
+def Generate_prompt_input(inst,input = None):
 	
-	if 'input' in text.keys():
+	if inst:
 		return f"""
 Below is an instruction for an instruction-tuning task, paired with an input that provides further context. Write a response that appropriately aligns with the provided instruction.
 
 ### Instruction:
-{text['instruction']}
+{inst}
 
 ### Input:
-{text['input']}
+{input}
 
 ### Response:
 """.strip()
@@ -44,7 +44,7 @@ Below is an instruction for an instruction-tuning task, paired with an input tha
 Below is an instruction for an instruction-tuning task, paired with an input that provides further context. Write a response that appropriately completes the request.
 
 ### Instruction:
-{text['instruction']}
+{inst}
 
 ### Response:
 """.strip()
@@ -57,24 +57,16 @@ def index():
 
 @app.route('/get-response', methods=['POST'])
 def get_response():
-    user_message = request.json['message']
-    print("User message:   ",user_message)
+    user_instruction = request.json['instruction']
+    user_prompt = request.json['prompt']
+    print("User inputs:   ",user_instruction,'\n',user_prompt)
     
     # Generate a response using the text generation pipeline
-    bot_response = text_generator(Generate_prompt_input(user_message))
+    result = text_generator(Generate_prompt_input(user_instruction,user_prompt))
+    bot_response = result[0]['generated_text'].split("### Response:\n")[-1]
 
-    # Extracting relevant information from source documents
-    source_docs_info = []
-    if bot_response['source_documents']:
-        for doc in bot_response['source_documents']:
-            doc_info = {
-                'source': doc.metadata['source'],
-                'file_path': doc.metadata['file_path'],
-                'page': doc.metadata['page']
-            }
-            source_docs_info.append(doc_info)
-    print("ChatBot is response:   ",bot_response['answer'],"\n", source_docs_info)
-    return jsonify({'message': bot_response['answer'], 'source_documents': source_docs_info})
+    print("ChatBot is response:   ",bot_response,"\n")
+    return jsonify({'message': bot_response})
 
 
 

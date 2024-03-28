@@ -22,8 +22,8 @@ RUN pip3 install transformers==4.36.2
 # Copy the entire project to the working directory
 COPY ./app /root/app  
 
-CMD tail -f /dev/null
-# CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+# CMD tail -f /dev/null
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
 
 
 
