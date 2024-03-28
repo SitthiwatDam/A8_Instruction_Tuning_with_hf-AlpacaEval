@@ -58,11 +58,11 @@ def index():
 @app.route('/get-response', methods=['POST'])
 def get_response():
     user_instruction = request.json['instruction']
-    user_prompt = request.json['prompt']
-    print("User inputs:   ",user_instruction,'\n',user_prompt)
+    user_input = request.json['prompt']
+    print("User inputs:   ",user_instruction,'\n',user_input)
     
     # Generate a response using the text generation pipeline
-    result = text_generator(Generate_prompt_input(user_instruction,user_prompt))
+    result = text_generator(Generate_prompt_input(user_instruction,user_input))
     bot_response = result[0]['generated_text'].split("### Response:\n")[-1]
 
     print("ChatBot is response:   ",bot_response,"\n")
