@@ -1,0 +1,14 @@
+version: '3'
+services:
+  engine_search:
+    image: sittiwat555/instructiontuning:lastest
+    build:
+      context: .
+      dockerfile: DockerFile.a8st123994
+    # ports:
+    #   - 5000:5000
+    volumes:
+      - ./app:/root/app
+
+
+  
