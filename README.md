@@ -5,7 +5,7 @@ We're going to develop an instruction model using the Large Language Model (LLM)
 
 
 ## Web application with Flask
-This web application is constructed using Flask, a widely-used Python web framework. This web application will allow users to input instructions and prompts, and the model will generate responses based on the provided input. We'll integrate the instruction model into the Flask application, providing a seamless user experience.
+This web application is constructed using Flask, a widely-used Python web framework. This web application will allow users to input instructions and prompts, and the model will generate responses based on the provided input. We integrated the instruction model into the Flask application, providing a seamless user experience.
 
 ### Quick Start with Docker Compose
 
