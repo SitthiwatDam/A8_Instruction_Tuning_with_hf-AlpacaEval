@@ -1,4 +1,4 @@
-# A8_Instruction_Tuning_with_hf&AlpacaEval
+# Instruction_Tuning_with_hf&AlpacaEval
 
 ## Instruction Tuning 'distilgpt2' model using Trainer and SFT
 We're going to develop an instruction model using the Large Language Model (LLM) from Hugging Face. To enhance our training process, we'll utilize Alpaca Format for instruction tuning and evaluation with Alpaca Eval. To delve deeper into this, refer to the `AlpacaInstructionTuning.ipynb` files.
